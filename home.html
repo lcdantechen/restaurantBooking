@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hot Restaurant</title>
+	<!-- Latest compiled and minified CSS & JS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+<body>
+	
+	<div class="container">
+		<div class="jumbotron text-center" style="font-size: 63px; padding-left:40px; padding-right:40px;">
+		<span class="glyphicon glyphicon-fire"></span>
+			<h1>Hot Restaurant</h1>
+			<h3>We only have 5 tables! Book your seat before they all are gone!</h3>
+			<hr>
+			<a href="/table"><button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-plus"></span> View Tables</button></a>
+			<a href="/reserve"><button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-th-list"></span> Make Reservation</button></a>
+		</div>
+	</div>
+
+	<footer class="footer">
+			<div class="container">
+			<p>
+			<a href="/api/tables">API Table Link</a>
+			|
+			<a href="/api/waitlist">API Wait List</a>
+			</p>
+			</div>
+</footer>
+	
+
+	<script type="text/javascript">
+		
+		$('#searchBtn').on("click", function(){
+			var searchedCharacter = $("#characterSearch").val().trim();
+			searchedCharacter = searchedCharacter.replace(/\s+/g, '').toLowerCase();
+			var currentURL = window.location.origin;
+			$.get( currentURL + "/api/" + searchedCharacter, function( data ) {
+				console.log(data);
+				if(data == false){
+					$("#name").text("The force is not strong with this one. Your character was not found. ");
+					$("#stats").hide();
+				}
+				else {
+					$("#stats").show();
+					$("#name").text(data.name);
+					$("#role").text(data.role);
+					$("#age").text(data.age);
+					$("#forcePoints").text(data.forcePoints);					
+				}
+			});
+		});	
+	</script>
+
+</body>
+</html>

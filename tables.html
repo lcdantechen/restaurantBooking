@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Star Wars - Express</title>
+	<!-- Latest compiled and minified CSS & JS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+<body>
+	
+	<div class="container">
+		<div class="jumbotron text-center" style="font-size: 63px; padding-left:40px; padding-right:40px;">
+		<span class="glyphicon glyphicon-fire"></span>
+			<h1>Hot Restaurant</h1>
+			<h3>We only have 5 tables! Book your seat before they all are gone!</h3>
+			<hr>
+			<a href="/reserve"><button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Make Reservation </button></a>
+			<a href="/"><button type="button" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-home"></span></button></a>
+		</div>
+		<div class="row">
+
+			<div class="col-lg-12">
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"><strong>Current Reservations</strong></h3>
+					</div>
+					<div class="panel-body" id="wellSection">
+
+					</div>
+				</div>
+			</div>	
+			<div class="col-lg-12">
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"><strong>Waiting List</strong></h3>
+					</div>
+					<div class="panel-body" id="waitingList">
+					
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		
+		/*var currentURL = window.location.origin;*/
+	/*	console.log(currentURL + "/api");*/
+		$.get("/api", function(data){
+			for (var i =0; i < 3; i++){
+				var wellSection = $("<div>");
+				wellSection.addClass('well');
+				wellSection.attr('id', 'characterWell-' + i)
+				$('#wellSection').append(wellSection);	
+				$("#characterWell-" + i).append('<span class="label label-primary">' + (i + 1) + '</span>');	
+				$("#characterWell-" + i).append("<h2>" + data[i].name + "</h2>");
+				$("#characterWell-" + i).append("<h3>Phone: " + data[i].phone + "</h4>");
+				$("#characterWell-" + i).append("<h3>Email: " + data[i].email + "</h4>");
+				$("#characterWell-" + i).append("<h3>Unique ID: " + data[i].uniqueID + "</h4>");	
+			}
+			for (var i =3; i < data.length; i++){
+				var wellSection = $("<div>");
+				wellSection.addClass('well');
+				wellSection.attr('id', 'characterWell-' + i)
+
+				$('#waitingList').append(wellSection);	
+				$("#characterWell-" + i).append('<span class="label label-primary">' + (i-3) + '</span>');			
+				$("#characterWell-" + i).append("<h2>" + data[i].name + "</h2>");
+				$("#characterWell-" + i).append("<h3>Phone: " + data[i].phone + "</h4>");
+				$("#characterWell-" + i).append("<h3>Email: " + data[i].email + "</h4>");
+				$("#characterWell-" + i).append("<h3>Unique ID: " + data[i].uniqueID + "</h4>");	
+			}
+		})
+	</script>
+
+</body>
+</html>
